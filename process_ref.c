@@ -75,7 +75,7 @@ unsigned int * process_select (unsigned int * cursp) {
 
 	if (cursp) {
 		//Suspending a process which has not yet finished
-		//Save state and enqueue it on the process queueu
+		//Save state and enqueue it on the process queue
 		current_process_p->sp = cursp;
 		enqueue(current_process_p,&process_queue);
 	} else {
@@ -87,7 +87,16 @@ unsigned int * process_select (unsigned int * cursp) {
 	}
 	
 	// Select a new process from the queue and make it current
-	current_process_p = dequeue(&process_queue);
+	int current_process_blocked = 1;
+	while(current_process_blocked) {
+		current_process_p = dequeue(&process_queue);
+		if(current_process_p -> blocked == 1) {
+			enqueue(&current_process_p);
+		} else {
+			current_process_blocked = 0;
+		}
+	}
+
 	
 	if (current_process_p) {
 		// Launch the process which was just popped off the queue
@@ -97,3 +106,4 @@ unsigned int * process_select (unsigned int * cursp) {
 		return NULL;
 	}
 }
+
