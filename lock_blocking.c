@@ -27,6 +27,7 @@ void l_lock(lock_t* l) {
 void l_unlock(lock_t* l) {
 	__disable_irq();
 	l -> flag = 0;
+	current_process_p -> blocked = 1;
 	process_t blocked_process = dequeue(l -> process_queue);
 	blocked_process -> blocked = 0;
 	__enable_irq();
