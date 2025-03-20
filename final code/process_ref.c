@@ -38,7 +38,7 @@ static void process_free(process_t *proc) {
 void process_start (void) {
 	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;
 	PIT->MCR = 0;
-	PIT->CHANNEL[0].LDVAL = DEFAULT_SYSTEM_CLOCK / 10;
+	PIT->CHANNEL[0].LDVAL = 150000;
 	NVIC_EnableIRQ(PIT_IRQn);
 	// Don't enable the timer yet. The scheduler will do so itself
 	
