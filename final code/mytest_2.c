@@ -53,7 +53,6 @@ int main(void) {
     delay(300);
 
     blue_on();
-    red_on();
     green_on();
 
     while (1);
