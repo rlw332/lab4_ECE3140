@@ -56,10 +56,10 @@ int main(void) {
     while (1);
 }
 
-//This test case has to do with what happens when two processes both require 
-//two locks (i.e. both processes are doubled locked)
+//This test case has to do with what happens when one processes acquires one lock 
+//In this test case we are trying to ensure everything ends up being freed properly after the locking process
 
-//For spin lock, we expect the program to first create two locks l1 and l2, and then go into process p1,
+//For spin lock, we expect the program to first create a locks l1, and then go into process p1,
 //where the process will lock l1 and then lock l2 after a short delay. Then p1 will enter its critical section 
 //and completes the process of turning on and off the red FRDM led on for a medium, then long, then short amount of time
 //After p1 completes its critical section, it unlocks the locks p1 and p2 and jumps into the p2 program where it 
