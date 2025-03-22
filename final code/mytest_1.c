@@ -1,6 +1,6 @@
 //TEST CASE 1
-//This test case has to do with what happens when two processes both require two locks
-//For spin lock, we expect...
+//This test case has to do with what happens when two processes both require two locks (i.e. both processes are doubled locked)
+//For spin lock, we expect the program to first go into p1 
 //For blocking lock, we expect...
 
 #include "3140_concur.h"
