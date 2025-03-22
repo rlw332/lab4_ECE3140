@@ -59,16 +59,15 @@ int main(void) {
 //This test case has to do with what happens when one processes acquires one lock 
 //In this test case we are trying to ensure everything ends up being freed properly after the locking process
 
-//For spin lock, we expect the program to first create a locks l1, and then go into process p1,
-//where the process will lock l1 and then lock l2 after a short delay. Then p1 will enter its critical section 
-//and completes the process of turning on and off the red FRDM led on for a medium, then long, then short amount of time
-//After p1 completes its critical section, it unlocks the locks p1 and p2 and jumps into the p2 program where it 
-//completes the process of toggling on the green FRDM led, and turning on and off the red FRDM twice before finishing
-//its critical section and moving on to the final process in the init where it toggles on the FRDM 
-//the green off and then the red on, and then the green on and then the red off before turning the blue and red LEDS in LED0 on
+//For spin lock, we expect the program to first create a lock l1, where p1 will try to acquire it (if it is unable to, it will 
+//be unable to move on until the lock is available). Since there are no other programs here, p1 is easily able to acquire the lock l1
+//and the program will continue with process p1. Then p1 will enter its critical section where it
+//completes the process of turning on and off the red FRDM led on for a medium, then long, then short amount of time (same as before).
+//After p1 completes its critical section, it unlocks the locks l1. Since there are no other processes spinning, waiting to acquire the lock l1
+//there is no risk of deadlock, and the program goes into the init section where it turns the the green FRDM led on, then the red one, before turning the green FRDM off and then the red one,
+//before ending by turning on the green and blue LEDS in LED0, making a teal color.
 
-//For blocking lock, we expect the same program to happen (a little faster), but the process in which the locks are used will vary
-//In this case after the locks l1 and l2 are initializes, p1 will try to lock l1 if it is available (which it is) and then moments later lock l2
-//The process p2 will also try to acquire the locks l1 and l2, but since p1 already has them, p2 will block the locks at the l_lock(&l1) 
-//and l_lock(&l2) function calls, and wait until p1 releases the locks by first completeing its critcial section and then unlocking the locks for use
-//which p2 can now lock, using them to enter the critical section before unlocking and continuing with the processes in the init
+//For blocking lock, we expect the same program to happen. The program will first make the lock l1, where p1 will try to acquire it and be successful,
+//since l1 is unlocked initially and there is no competing program (which would have blocked until the locks were avaialble)
+//From here the program will act in the exact same way (with the exact same speed as the spin lock case), completing the red medium, long, short 
+//sequence before unlocking the lock l1 and continuing to complete the green FRDM on, red FRDM on, green FRDM off, red FRDM off, teal (LED0) sequence.
