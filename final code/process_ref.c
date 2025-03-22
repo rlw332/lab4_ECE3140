@@ -88,43 +88,17 @@ unsigned int * process_select (unsigned int * cursp) {
 		}
 	}
 	
-	// Select a new process from the global ready queue.
+	//Select a new process from the global ready queue.
 	  while (1) {
 	    process_t *proc = dequeue(&process_queue);
 	    if (proc == NULL) {
-	       // No process ready to run; exit scheduler.
+	       //No process ready to run; exit scheduler.
 	       return NULL;
 	    }
-	    // Only choose a process that is not blocked.
+	    //Only choose a process that is not blocked.
 	    if (proc->blocked == 0) {
 	        current_process_p = proc;
 	        return proc->sp;
 	    }
 	  }
 }
-
-	        // O
-	/*
-	// Select a new process from the queue and make it current
-	int current_process_blocked = 1;
-	while(current_process_blocked) {
-		current_process_p = dequeue(&process_queue);
-		if(current_process_p == NULL){
-			current_process_blocked = 0;
-		} else if(current_process_p -> blocked >= 1) {
-			enqueue(current_process_p, &process_queue);
-		} else {
-			current_process_blocked = 0;
-		}
-	}
-
-	
-	if (current_process_p) {
-		// Launch the process which was just popped off the queue
-		return current_process_p->sp;
-	} else {
-		// No process was selected, exit the scheduler
-		return NULL;
-	}
-	*/
-
