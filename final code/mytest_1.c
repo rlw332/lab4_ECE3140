@@ -28,8 +28,14 @@ void p1(void) {
     red_toggle_frdm();
     delay(150);
     red_toggle_frdm();
-
+    delay(150);
     l_unlock(&l1);
+    
+    red_toggle_frdm();
+    delay(100);
+    red_toggle_frdm();
+    delay(100);
+    
     l_unlock(&l2);
 }
 
