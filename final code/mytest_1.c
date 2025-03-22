@@ -86,10 +86,12 @@ int main(void) {
 //This test case has to do with what happens when two processes both require 
 //two locks (i.e. both processes are doubled locked)
 
-//For spin lock, we expect the program to first create two locks l1 and l2, and then go into process p1,
+//For spin lock, we expect the program to first create two locks l1 and l2. Then the process p1 will attempt to,
+//acquire the locks by spinning (checking continuously if they are available). Since the locks are available, the program goes into p1
 //where the process will lock l1 and then lock l2 after a short delay. Then p1 will enter its critical section 
 //and completes the process of turning on and off the red FRDM led on for a medium, then long, then short amount of time
-//After p1 completes its critical section, it unlocks the locks p1 and p2 and jumps into the p2 program where it 
+//After p1 completes its critical section, it unlocks the locks p1 and p2 and jumps into the p2 program (which has failed to acquire the locks initially 
+//and has been spinning (checking continuously until the locks are available), unable to proceed, until now where it 
 //completes the process of toggling on the green FRDM led, and turning on and off the red FRDM twice before finishing
 //its critical section and moving on to the final process in the init where it toggles on the FRDM 
 //the green off and then the red on, and then the green on and then the red off before turning the blue and red LEDS in LED0 on
