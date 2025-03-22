@@ -90,7 +90,7 @@ int main(void) {
 //acquire the locks by spinning (checking continuously if they are available). Since the locks are available, the program goes into p1
 //where the process will lock l1 and then lock l2 after a short delay. Then p1 will enter its critical section 
 //and completes the process of turning on and off the red FRDM led on for a medium, then long, then short amount of time
-//After p1 completes its critical section, it unlocks the locks p1 and p2 and jumps into the p2 program (which has failed to acquire the locks initially 
+//After p1 completes its critical section, it unlocks the locks l1 and l2 and jumps into the p2 program (which has failed to acquire the locks initially 
 //and has been spinning (checking continuously until the locks are available), unable to proceed, until now where it 
 //completes the process of toggling on the green FRDM led, and turning on and off the red FRDM twice before finishing
 //its critical section and moving on to the final process in the init where it toggles on the FRDM 
@@ -98,6 +98,6 @@ int main(void) {
 
 //For blocking lock, we expect the same program to happen (a little faster), but the process in which the locks are used will vary
 //In this case after the locks l1 and l2 are initializes, p1 will try to lock l1 if it is available (which it is) and then moments later lock l2
-//The process p2 will also try to acquire the locks l1 and l2, but since p1 already has them, p2 will block the locks at the l_lock(&l1) 
+//The process p2 will also try to acquire the locks l1 and l2, but since p1 already has them, p2 will block the locks at the l_lock(&l1)  
 //and l_lock(&l2) function calls, and wait until p1 releases the locks by first completeing its critcial section and then unlocking the locks for use
 //which p2 can now lock, using them to enter the critical section before unlocking and continuing with the processes in the init
